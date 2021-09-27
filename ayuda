@@ -1,0 +1,102 @@
+**CREAMOS REPOSITORIO EN GITHUB
+	echo "# TEST-PHP-NEXURA" >> README.md
+	git init
+	git add README.md
+	git commit -m "first commit"
+	git branch -M main
+	git remote add origin https://github.com/joelAdmin/TEST-PHP-NEXURA.git
+	git push -u origin main
+
+**CREAMOS TOKEN PERSONAL POR 30 DIAS
+	ghp_
+
+**CREAMOS PROYECTO DE LARAVEL 
+	composer create-project --prefer-dist laravel/laravel:^7.0 test-php-nexura
+	Package manifest generated successfully.
+	> @php artisan key:generate --ansi
+	Application key set successfully.
+
+**CONFIGURACION DE MANEJADOR DE VERSIONES GIT CON REPOSITORIO GITHUB	
+	git init
+	git remote add origin https://github.com/joelAdmin/TEST-PHP-NEXURA.git	
+	git add .
+	git commit -m 'config repositorio gitHub'
+	git log 
+	git status
+	git push origin master
+
+**CREAMOS UNA RAMA DE TRABAJO
+	git checkout -b nexura
+
+**PUBLICAMOS LA RAMA PARA EL RESTO 
+	git push origin nexura
+
+**CREAMOS BASE DE DATOS 
+	nexura
+
+**CONFIGURAMOS ARCHIVO .env CON SUS VARIABLE DE ENTORNO
+	DB_CONNECTION=mysql
+	DB_HOST=127.0.0.1
+	DB_PORT=3306
+	DB_DATABASE=nexura
+	DB_USERNAME=root
+	DB_PASSWORD=
+
+**CREAR TABLAS SQL MEDIANTES EL SISTEMA DE MIGRACIONES DE LARAVEL PARA UN MAYOR COTROL.(LOS ARCHIVOS GENERTADOS SE GUARDAN EN database/migrations/)
+	*CREAMOS LA PRIMERA TABLA  areas
+		php artisan make:migration create_areas_table
+	*CREAMOS LA SEGUNDA empleados
+		php artisan make:migration create_empleados_table
+	*CREAMOS LA TERCERA roles
+		php artisan make:migration create_roles_table
+	*POR ULTIMO TABLA PIVOT empleado_rol
+		php artisan make:migration create_empleado_rol_table
+	*EJECUTAMOS LAS MIGRACIONES CON:
+		php artisan migrate
+		/**Listo ya estan las tablas creadas**/ ayuda con el comando (php artisan)
+
+** CONFIGURAMOS FRONTEND Y LIBRERIAS A UTILITLIZAR
+  <link href="template/ruang-admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  	
+**CREAMOS LOS MODELOS
+	 php artisan make:model Empleado
+	  php artisan make:model Role
+	   php artisan make:model Area
+	   
+**CREAMOS LOS CONTROLADORES
+	php artisan make:controller AreaController --resource
+	php artisan make:controller EmpleadoController --resource
+	php artisan make:controller RoleController --resource
+
+**CREAMOS RUTAS  (routes/web.php)
+	Route::post('/new', 'EmpleadoController@store');
+	
+** SE CREARON 3 AREAS TRES ROLES
+	AREAS: administracion, contabilidad, sistema
+	ROLES: Master, administrador y empleado
+	
+** OBSERVACION TUVE PROBLEMAS CON LA TABLA PIVOT empleado_rol:
+	Esto se debe aque Laravel usa la siguiente sintaxis para crear tablas pivot   (tabla1EnSingular_tabla2EnSingular) es decir tabla 1 en     singular mas guion bajo  seguido de tablados en singular por loque tuve que realizar una modificacion solo para ese paso y cumplir con el requerimiento en el modelo:
+	/test-php-nexura/app/Empleado.php
+	 public function role(){
+		return $this->belongsToMany('App\Role', 'empleado_rol', 'empleado_id', 'rol_id');
+	   }
+	   
+**NOTA EL ACMPO INPUT LO DEJE TYPE="TEXT" PARA QUE VERIFIQUEN LA VALIDACION BACKEND
+	<input type="text" class="form-control" id="email" name="email" placeholder="Nombre comple del empleado">
+
+** LISTA DE EMPPLEADOS CON DATATABLE
+	composer require yajra/laravel-datatables-oracle:"~9.0"
+	
+** ACTUALIZAR RAMA nexura 
+	git add .
+	git commit -m 'actualizando repositorio'
+	git push
+	
+** HACER MERGE A LA RAMA MASTER
+	git checkout master
+	git merge nexura
+	git push
+
+
+	
